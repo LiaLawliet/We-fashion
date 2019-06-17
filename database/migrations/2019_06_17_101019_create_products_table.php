@@ -19,12 +19,11 @@ class CreateProductsTable extends Migration
             $table->text('description')->nullable();
             $table->string('reference');
             $table->unsignedInteger('genre_id')->nullable();
-            $table->unsignedInteger('size_id');
+            $table->text('picture')->nullable();
             $table->enum('sales', ['onSales', 'standard']);
             $table->enum('status', ['published', 'unpublished']);
             
             $table->foreign('genre_id')->references('id')->on('genres')->onDelete('SET NULL');
-            $table->foreign('size_id')->references('id')->on('sizes')->onDelete('CASCADE');
             $table->timestamps();
         });
     }
