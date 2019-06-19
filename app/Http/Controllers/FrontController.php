@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class FrontController extends Controller
 {
-    protected $paginate = 6;
+    protected $paginate = 15;
     
     public function __construct(){
 
