@@ -3,25 +3,29 @@
 @section('content')
 <article class="row">
     <div class="col-md-12">
-    @if(count($book)>0)
-    <h1>{{$book->title}}</h1>
-    @if(count($book->picture) > 0)
-        <div class="col-xs-6 col-md-12">
+    @if(count($product)>0)
+    <h1>{{$product->title}}</h1>
+    @if(count($product->picture) > 0)
+        <div class="col-xs-12 col-md-6">
             <a href="#" class="thumbnail">
-            <img src="{{asset('images/'.$book->picture->link)}}" alt="{{$book->picture->title}}">
+            @if ($product->genre_id === 1)
+            <img class="" src="{{asset('/img/hommes/'.$product->picture)}}" alt="{{$product->name}}">
+            @else
+            <img class="" src="{{asset('/img/femmes/'.$product->picture)}}" alt="{{$product->name}}">
+            @endif
             </a>
         </div>
     @endif
     <h2>Description :</h2>
-    {{$book->description}}    
-    <h3>Auteur(s) :</h3>
-    <ul>
-        @forelse($book->authors as $author)
-        <li >{{$author->name}}</li>
-        @empty
-        <li>Aucun auteur</li>
-        @endforelse
-    </ul>
+    {{$product->description}}    
+    <h3>Prix :</h3>
+    {{$product->price}} €
+    <h3>Taille :</h3>
+    <select name="" id=""></select>
+        @foreach($product->sizes as $size)
+        <option value="">{{$size->name}}</option>
+        @endforeach
+    </select>
     @else 
     <h1>Désolé aucun article</h1>
     @endif 

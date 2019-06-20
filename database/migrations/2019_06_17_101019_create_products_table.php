@@ -18,6 +18,7 @@ class CreateProductsTable extends Migration
             $table->string('name',100);
             $table->text('description')->nullable();
             $table->string('reference');
+            $table->integer('price');
             $table->unsignedInteger('genre_id')->nullable();
             $table->text('picture')->nullable();
             $table->enum('sales', ['onSales', 'standard']);

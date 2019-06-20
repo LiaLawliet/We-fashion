@@ -13,9 +13,9 @@
 
 Route::get('/', 'FrontController@index');
 
-Route::get('product/{id}', 'FrontController@item')->where(['id' => '[0-9]+']);
+Route::get('product/{id}', 'FrontController@show')->where(['id' => '[0-9]+']);
 
-Route::get('genre/{genre_id}', 'FrontController@homme')->where(['genre_id' => '[0-9]+']);
+Route::get('genre/{id}', 'FrontController@showByGenre')->where(['id' => '[0-9]+']);
 
 Route::get('test/{id}', function ($id) {
 
@@ -27,3 +27,5 @@ Route::get('test/{id}', function ($id) {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::resource('admin/product', 'ProductController')->middleware('auth');
