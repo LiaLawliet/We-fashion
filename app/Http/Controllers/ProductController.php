@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Faker\Generator as Faker;
 use App\Product;
 use App\Size;
 use App\Genre;
@@ -33,7 +34,7 @@ class ProductController extends Controller
     {
         $sizes = Size::pluck('name','id')->all();
         $genres = Genre::pluck('name','id')->all();
-        return view('back.product.create',['sizes'=>$genres,'genres'=>$genres]);
+        return view('back.product.create',['sizes'=>$sizes,'genres'=>$genres]);
     }
 
     /**
@@ -42,9 +43,18 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request,Faker $faker)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required',
+            'description' => 'required',
+            'genre_id' => 'integer',
+            'reference' => 'required|alpha_num|min:16|max:16',
+            'sizes.*' => 'integer', // pour vérifier un tableau d'entiers il faut mettre sizes.*
+            'status' => 'in:published,unpublished'
+        ]);
+
+        $product = Product::create($request->all());
     }
 
     /**

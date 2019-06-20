@@ -4,7 +4,7 @@
             <li class="nav-item">
                 <a class="nav-link" href="{{url('/')}}">Acceuil</a>
             </li>
-            @if(isset($genres))
+            @if(Route::is('product.*') == false)
                 @forelse($genres as $id => $name)
                 <li class="nav-item">
                     <a class="nav-link" href="{{url('genre', $id)}}">{{$name}}</a>
