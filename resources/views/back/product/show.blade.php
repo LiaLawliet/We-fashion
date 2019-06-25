@@ -22,11 +22,7 @@
     @if(!empty($product->picture))
         <div class="col-xs-6 col-md-3">
             <a href="#" class="thumbnail">
-                @if ($product->genre_id === 1)
-                <img style='height: 400px;object-fit: cover;' src="{{asset('/img/hommes/'.$product->picture)}}" alt="{{$product->name}}">
-                @else
-                <img style='height: 400px;object-fit: cover;' src="{{asset('/img/femmes/'.$product->picture)}}" alt="{{$product->name}}">
-                @endif
+                <img style='height: 400px;object-fit: cover;' src="{{asset('/img/'.$product->genre_id.'/'.$product->picture)}}" alt="{{$product->name}}">
             </a>
         </div>
     @endif

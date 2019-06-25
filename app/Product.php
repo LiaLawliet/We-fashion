@@ -8,7 +8,7 @@ class Product extends Model
 {
 
     protected $fillable = [
-        'name', 'description', 'genre_id'
+        'name', 'description', 'genre_id','price','picture','status','sales','reference'
     ];
 
     // ici le setter va récupérer la valeur à insérer en base de données
@@ -24,11 +24,11 @@ class Product extends Model
 
     }
 
-    public function genres(){
+    public function genre(){
         return $this->belongsTo(Genre::class);
     }
     
-    public function sizes(){
+    public function size(){
         return $this->belongsToMany(Size::class);
     }
 }

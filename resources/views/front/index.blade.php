@@ -7,11 +7,7 @@
 		<div class="col-md-4 col-xs-12">
 			<a href="{{url('product', $product->id)}}">
 				<div class="card" style="width: 90%; margin-bottom: 40px;">
-					@if ($product->genre_id === 1)
-					<img class="card-img-top" style='height: 400px;object-fit: cover;' src="{{asset('/img/hommes/'.$product->picture)}}" alt="{{$product->name}}">
-					@else
-					<img class="card-img-top" style='height: 400px;object-fit: cover;' src="{{asset('/img/femmes/'.$product->picture)}}" alt="{{$product->name}}">
-					@endif
+					<img class="card-img-top" style='height: 400px;object-fit: cover;' src="{{asset('/img/'.$product->genre_id.'/'.$product->picture)}}" alt="{{$product->name}}">
 					<div class="card-body">
 						<h5 class="card-title">{{$product->name}}</h5>
 						<p class="card-text">{{$product->price}} €</p>

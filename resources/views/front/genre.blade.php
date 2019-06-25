@@ -11,7 +11,7 @@
 @if(count($book->picture) > 0)
         <div class="col-xs-6 col-md-3">
             <a href="#" class="thumbnail">
-            <img width="171" src="{{asset('images/'.$book->picture->link)}}" alt="{{$book->picture->title}}">
+                <img class="" src="{{asset('/img/'.$product->genre_id.'/'.$product->picture)}}" alt="{{$product->name}}">
             </a>
         </div>
 @endif

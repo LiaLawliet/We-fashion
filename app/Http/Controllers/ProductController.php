@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Faker\Generator as Faker;
 use App\Product;
 use App\Size;
 use App\Genre;
@@ -43,18 +42,36 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request,Faker $faker)
+    public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required',
+            'name' => 'required|min:5|max:100',
             'description' => 'required',
-            'genre_id' => 'integer',
+            'price' => 'required|numeric',
+            'picture' => 'required|image:max:3000',
+            'status' => 'required|in:published,unpublished',
+            'sales' => 'required|in:onSales,standard',
             'reference' => 'required|alpha_num|min:16|max:16',
-            'sizes.*' => 'integer', // pour vérifier un tableau d'entiers il faut mettre sizes.*
-            'status' => 'in:published,unpublished'
+            'genre_id' => 'required|integer',
+            'sizes' => 'required'
         ]);
 
-        $product = Product::create($request->all());
+        // image
+        $im = $request->file('picture');
+        if(!empty($im)){
+            $im->store('products');
+        }
+
+        $imgName = $request->picture->hashName();
+
+        // store the datas && rewrite "$datas['picture']" as a path
+        $datas = $request->all();
+        $datas['picture'] =  'products/' . $imgName;
+
+        // insert the datas inside the database
+        $product = Product::create($datas);
+        $product->size()->attach($request->sizes);
+        return redirect()->route('product.index')->with('message', 'Produit ajouté avec succès !');
     }
 
     /**

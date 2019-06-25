@@ -21,14 +21,8 @@ class ProductTableSeeder extends Seeder
 
             $product->genre()->associate($randGenre);
 
-            switch($RNG){
-                case 1: $images=glob(public_path().'/img/hommes/*');
-                        $imagesRNG = $images[array_rand($images)];
-                    break;
-                case 2: $images=glob(public_path().'/img/femmes/*');
-                        $imagesRNG = $images[array_rand($images)];
-                    break;
-            }
+            $images=glob(public_path().'/img/'.$RNG.'/*');
+            $imagesRNG = $images[array_rand($images)];
 
             $product->picture = basename($imagesRNG);
 
