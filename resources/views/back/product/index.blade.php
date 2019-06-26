@@ -18,7 +18,7 @@
     @forelse($products as $product)
         <tr>
             <td>{{$product->name}}</td>
-	        <td>{{$product->genre->name?? 'aucun genre' }}</td>
+	        <td>{{$product->category->name?? 'aucune category' }}</td>
             <td>{{$product->price}} €</td>
             <td>{{$product->status}}</td>
             <td>

@@ -15,7 +15,7 @@ Route::get('/', 'FrontController@index');
 
 Route::get('product/{id}', 'FrontController@show')->where(['id' => '[0-9]+']);
 
-Route::get('genre/{id}', 'FrontController@showByGenre')->where(['id' => '[0-9]+']);
+Route::get('category/{id}', 'FrontController@showByCategory')->where(['id' => '[0-9]+']);
 
 Route::get('test/{id}', function ($id) {
 

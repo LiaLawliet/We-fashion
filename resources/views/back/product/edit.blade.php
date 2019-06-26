@@ -4,8 +4,8 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6">
-                <h1>Créer un produit :  </h1>
-                <form action="{{route('product.store')}}" method="post" enctype="multipart/form-data">
+                <h1>Modifiez un produit :  </h1>
+                <form action="{{route('product.update')}}" method="post" enctype="multipart/form-data">
                     {{ csrf_field() }}
                     <div class="form">
                         <div class="form-group">

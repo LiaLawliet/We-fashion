@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
-<h1>Tous les livres par genre {{$genre->name?? 'aucun genre'}}</h1>
+<h1>Tous les livres par genre {{$category->name?? 'aucun category'}}</h1>
 {{$books->links()}}
 <ul class="list-group">
 @forelse($books as $book)
@@ -11,7 +11,7 @@
 @if(count($book->picture) > 0)
         <div class="col-xs-6 col-md-3">
             <a href="#" class="thumbnail">
-                <img class="" src="{{asset('/img/'.$product->genre_id.'/'.$product->picture)}}" alt="{{$product->name}}">
+                <img class="" src="{{asset('/img/'.$product->category_id.'/'.$product->picture)}}" alt="{{$product->name}}">
             </a>
         </div>
 @endif

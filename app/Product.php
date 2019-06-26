@@ -8,24 +8,24 @@ class Product extends Model
 {
 
     protected $fillable = [
-        'name', 'description', 'genre_id','price','picture','status','sales','reference'
+        'name', 'description', 'category_id','price','picture','status','sales','reference'
     ];
 
     // ici le setter va récupérer la valeur à insérer en base de données
     // nous pourrons alors vérifier sa valeur avant que le modèle n'insère la donnée en base de données
-    public function setGenreIdAttribute($value){
+    public function setCategoryIdAttribute($value){
        
         if($value == 0){
-            $this->attributes['genre_id'] = null;
+            $this->attributes['category_id'] = null;
         }else{
 
-            $this->attributes['genre_id'] = $value;
+            $this->attributes['category_id'] = $value;
         }
 
     }
 
-    public function genre(){
-        return $this->belongsTo(Genre::class);
+    public function category(){
+        return $this->belongsTo(Category::class);
     }
     
     public function size(){

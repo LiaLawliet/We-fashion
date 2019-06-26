@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Product;
 use App\Size;
-use App\Genre;
+use App\Category;
 
 class ProductController extends Controller
 {
@@ -32,8 +32,8 @@ class ProductController extends Controller
     public function create()
     {
         $sizes = Size::pluck('name','id')->all();
-        $genres = Genre::pluck('name','id')->all();
-        return view('back.product.create',['sizes'=>$sizes,'genres'=>$genres]);
+        $catgories = Category::pluck('name','id')->all();
+        return view('back.product.create',['sizes'=>$sizes,'catgories'=>$catgories]);
     }
 
     /**
@@ -52,26 +52,26 @@ class ProductController extends Controller
             'status' => 'required|in:published,unpublished',
             'sales' => 'required|in:onSales,standard',
             'reference' => 'required|alpha_num|min:16|max:16',
-            'genre_id' => 'required|integer',
+            'category_id' => 'required|integer',
             'sizes' => 'required'
         ]);
 
-        // image
-        $im = $request->file('picture');
-        if(!empty($im)){
-            $im->store('products');
-        }
-
-        $imgName = $request->picture->hashName();
-
-        // store the datas && rewrite "$datas['picture']" as a path
         $datas = $request->all();
-        $datas['picture'] =  'products/' . $imgName;
+
+        // hash image name
+        
+        $imgName = $request->picture->hashName();
+        $datas['picture'] = $imgName;
+
+        // store the image
+        $categoryId = $datas['category_id'];
+        $im = $request->file('picture');
+        $im->move(public_path('/img/'.$categoryId),$datas['picture']);
 
         // insert the datas inside the database
         $product = Product::create($datas);
         $product->size()->attach($request->sizes);
-        return redirect()->route('product.index')->with('message', 'Produit ajouté avec succès !');
+        return redirect()->route('product.index')->with('message', 'Le produit a bien été ajouté');
     }
 
     /**
@@ -95,6 +95,10 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
+        $product = Product::find($id);
+        $categories = Categorie::pluck('name', 'id')->all();
+        $sizes = Size::pluck('name', 'id')->all();
+        return view('back.product.edit', ['product' => $product, 'categories' => $categories, 'sizes' => $sizes]);
     }
 
     /**

@@ -4,7 +4,7 @@
 <div class="row">
     <div class="col-md-6">
         <h1><strong>title</strong> :{{$product->name}}</h1>
-	    <p><strong>Genre :</strong>{{$product->genre->name?? 'aucun'}}</p>
+	    <p><strong>Genre :</strong>{{$product->category->name?? 'aucun'}}</p>
         <p><strong>Date de création : </strong> : {{$product->created_at}}</p>
         <p><strong>Date de mise à jour : </strong> : {{$product->updated_at}}</p>
         <p><strong>Statut :</strong> {{$product->status}}</p>
@@ -22,7 +22,7 @@
     @if(!empty($product->picture))
         <div class="col-xs-6 col-md-3">
             <a href="#" class="thumbnail">
-                <img style='height: 400px;object-fit: cover;' src="{{asset('/img/'.$product->genre_id.'/'.$product->picture)}}" alt="{{$product->name}}">
+                <img style='height: 400px;object-fit: cover;' src="{{asset('/img/'.$product->category_id.'/'.$product->picture)}}" alt="{{$product->name}}">
             </a>
         </div>
     @endif

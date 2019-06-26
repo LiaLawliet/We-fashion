@@ -8,7 +8,7 @@
     @if(count($product->picture) > 0)
         <div class="col-xs-12 col-md-6">
             <a href="#" class="thumbnail">
-                <img class="" src="{{asset('/img/'.$product->genre_id.'/'.$product->picture)}}" alt="{{$product->name}}">
+                <img class="" src="{{asset('/img/'.$product->category_id.'/'.$product->picture)}}" alt="{{$product->name}}">
             </a>
         </div>
     @endif

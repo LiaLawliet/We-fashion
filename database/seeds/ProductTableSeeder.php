@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Genre;
+use App\Category;
 use App\Size;
 
 class ProductTableSeeder extends Seeder
@@ -17,9 +17,9 @@ class ProductTableSeeder extends Seeder
         factory(App\Product::class, 80)->create()->each(function($product){
             $RNG = rand(1, 2);
 
-            $randGenre = Genre::find($RNG);
+            $randCategory= Category::find($RNG);
 
-            $product->genre()->associate($randGenre);
+            $product->category()->associate($randCategory);
 
             $images=glob(public_path().'/img/'.$RNG.'/*');
             $imagesRNG = $images[array_rand($images)];

@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class GenreTableSeeder extends Seeder
+class CategoryTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,7 +11,7 @@ class GenreTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('genres')->insert([
+        DB::table('categories')->insert([
             [
                 'name' => 'Homme',
             ],

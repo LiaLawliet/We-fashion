@@ -5,9 +5,9 @@
                 <a class="nav-link" href="{{url('/')}}">Acceuil</a>
             </li>
             @if(Route::is('product.*') == false)
-                @forelse($genres as $id => $name)
+                @forelse($categories as $id => $name)
                 <li class="nav-item">
-                    <a class="nav-link" href="{{url('genre', $id)}}">{{$name}}</a>
+                    <a class="nav-link" href="{{url('category', $id)}}">{{$name}}</a>
                 </li>
                 @empty
                 @endforelse
