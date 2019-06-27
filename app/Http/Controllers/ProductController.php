@@ -13,6 +13,7 @@ class ProductController extends Controller
 
     protected $paginate = 10;
 
+
     /**
      * Display a listing of the resource.
      *

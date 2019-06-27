@@ -1,9 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Product;
-use App\Size;
 use App\Category;
+use File;
 
 use Illuminate\Http\Request;
 
@@ -15,7 +14,7 @@ class CategoryController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    protected $paginate = 10;
+    protected $paginate = 15;
 
     public function index()
     {
@@ -42,7 +41,18 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required|min:5|max:100'
+        ]);
+
+        
+        
+        $datas = $request->all();
+        $category = Category::create($datas);
+        $path = public_path().'/img/'.$category->id;
+        File::makeDirectory($path);
+
+        return redirect()->route('categories.index')->with('message', 'La catégorie a bien été mise à jour');
     }
 
     /**
@@ -53,7 +63,6 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        //
     }
 
     /**
@@ -76,7 +85,17 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required|min:5|max:100'
+        ]);
+
+        $category = Category::find($id);
+        
+        $datas = $request->all();
+
+        $category->update($datas);
+
+        return redirect()->route('categories.index')->with('message', 'La catégorie a bien été mise à jour');
     }
 
     /**
@@ -87,6 +106,8 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $category = Category::find($id);
+        $category->delete();
+        return redirect()->route('categories.index');
     }
 }
