@@ -28,7 +28,13 @@
             <td>
                 <a class="btn btn-primary" href="{{route('product.edit', $product->id)}}"><span aria-hidden="true">Modifier</span></a>
             </td>
-            <td><a class='btn btn-danger'>Supprimer</a></td>
+            <td>
+                <form class="delete" method="POST" action="{{route('product.destroy', $product->id)}}">
+                    {{csrf_field()}}
+                    {{method_field('DELETE')}}
+                    <input class="btn btn-danger" type="submit" value="Supprimer"/>
+                </form>
+            </td>
         </tr>
     @empty
         aucun produit ...
