@@ -10,7 +10,7 @@
         <p><strong>Statut :</strong> {{$product->status}}</p>
         <h2>Les tailles disponibles :</h2>
         <ul>
-        @forelse($product->sizes as $size)
+        @forelse($product->size as $size)
             <li>{{$size->name}}</li>
         @empty
         aucune taille

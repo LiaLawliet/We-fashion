@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Product;
 use App\Size;
 use App\Category;
+use File;
 
 class ProductController extends Controller
 {
@@ -60,13 +61,13 @@ class ProductController extends Controller
 
         // hash image name
         
-        $imgName = $request->picture->hashName();
-        $datas['picture'] = $imgName;
+        $imageName = $request->picture->hashName();
+        $datas['picture'] = $imageName;
 
         // store the image
         $categoryId = $datas['category_id'];
-        $im = $request->file('picture');
-        $im->move(public_path('/img/'.$categoryId),$datas['picture']);
+        $img = $request->file('picture');
+        $img->move(public_path('/img/'.$categoryId),$datas['picture']);
 
         // insert the datas inside the database
         $product = Product::create($datas);
@@ -96,8 +97,9 @@ class ProductController extends Controller
     public function edit($id)
     {
         $product = Product::find($id);
-        $categories = Categorie::pluck('name', 'id')->all();
+        $categories = Category::pluck('name', 'id')->all();
         $sizes = Size::pluck('name', 'id')->all();
+
         return view('back.product.edit', ['product' => $product, 'categories' => $categories, 'sizes' => $sizes]);
     }
 
@@ -110,7 +112,38 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required|min:5|max:100',
+            'description' => 'required',
+            'price' => 'required|numeric',
+            'picture' => 'required|image:max:3000',
+            'status' => 'required|in:published,unpublished',
+            'sales' => 'required|in:onSales,standard',
+            'reference' => 'required|alpha_num|min:16|max:16',
+            'category_id' => 'required|integer',
+            'sizes' => 'required'
+        ]);
+
+        $product = Product::find($id);
+        
+        $datas = $request->all();
+
+        $file = $request->file('picture');
+        if(!empty($file)){
+            File::delete(public_path('/img/'.$product->category_id.'/'.$product->picture));// delete img from folder
+            $imageName = $request->picture->hashName();
+            $datas['picture'] = $imageName;
+
+            $categoryId = $datas['category_id'];
+            $img = $request->file('picture');
+            $img->move(public_path('/img/'.$categoryId),$datas['picture']);
+        }
+
+        
+        $product->update($datas);
+        $product->size()->sync($request->sizes);
+
+        return redirect()->route('product.index')->with('message', 'Le produit a bien été mise à jour');
     }
 
     /**

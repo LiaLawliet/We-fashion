@@ -15,7 +15,7 @@
                         </div>
                         <div class="form-group">
                             <label for="price"><h3>Prix:</h3></label>
-                            <input type="text" name="price" value="{{old('price')}}" class="form-control" id="price" placeholder="Nom du produit">
+                            <input type="text" name="price" value="{{old('price')}}" class="form-control" id="price" placeholder="Prix">
                             @if($errors->has('price')) <span class="error text-danger">{{$errors->first('price')}}</span>@endif
                         </div>
                         <div class="form-group">
@@ -41,7 +41,7 @@
                     <div class="">
                         <div class="form-group">
                         @forelse($sizes as $id => $name)
-                            <div class="form-check form-check-inline">
+                            <div class="form-check">
                                 <input {{ ( !empty(old('sizes')) and in_array($id, old('sizes')) ) ? 'checked' : ''  }} class="form-check-input" type="checkbox" name="sizes[]" id="sizes{{$id}}" value="{{$id}}">
                                 <label class="form-check-label" for="size{{$id}}">{{$name}}</label>
                             </div>

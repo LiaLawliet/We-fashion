@@ -11,6 +11,7 @@
             <th>Prix</th>
             <th>Statut</th>
             <th>Détail</th>
+            <th>Modifier</th>
             <th>Supprimer</th>
         </tr>
     </thead>
@@ -22,9 +23,12 @@
             <td>{{$product->price}} €</td>
             <td>{{$product->status}}</td>
             <td>
-                <a href="{{route('product.show', $product->id)}}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true">SHOW</span></a>
+                <a class="btn btn-secondary" href="{{route('product.show', $product->id)}}"><span aria-hidden="true">Détails</span></a>
             </td>
-            <td><button class='btn btn-danger'>Supprimer</button></td>
+            <td>
+                <a class="btn btn-primary" href="{{route('product.edit', $product->id)}}"><span aria-hidden="true">Modifier</span></a>
+            </td>
+            <td><a class='btn btn-danger'>Supprimer</a></td>
         </tr>
     @empty
         aucun produit ...
