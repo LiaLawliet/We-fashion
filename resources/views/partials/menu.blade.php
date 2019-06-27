@@ -1,10 +1,10 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style='margin-bottom: 10px;'>
     <div class="container">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="{{url('/')}}">Acceuil</a>
-            </li>
             @if(Route::is('product.*') == false)
+            <li class="nav-item">
+                <a class="nav-link" href="{{url('/')}}" style='color:#66EB9A'>WE FASHION</a>
+            </li>
                 @forelse($categories as $id => $name)
                 <li class="nav-item">
                     <a class="nav-link" href="{{url('category', $id)}}">{{$name}}</a>
@@ -12,8 +12,11 @@
                 @empty
                 @endforelse
             @else
+                <li class="nav-item" style='color:#66EB9A'>
+                    <a class="nav-link" href="" onClick="event.preventDefault();" style='color:#66EB9A'>WE FASHION</a>
+                </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{url('admin/product')}}">Produits</a>
+                    <a class="nav-link nav-link" href="{{url('admin/product')}}">Produits</a>
                 </li>
                 <!-- <li class="nav-item">
                     <a class="nav-link" Catégories</a>

@@ -58,10 +58,8 @@ data-target="#DeleteModal" class="btn btn-danger" type="submit" value="Supprimer
                  <p class="text-center">Etes vous sûr de vouloir supprimer ce produit ?</p>
              </div>
              <div class="modal-footer">
-                 <center>
-                     <button type="button" class="btn btn-success" data-dismiss="modal">Annuler</button>
-                     <button type="submit" name="" class="btn btn-danger" data-dismiss="modal" onclick="formSubmit()">Oui, supprimer</button>
-                 </center>
+                    <button type="button" class="btn btn-success" data-dismiss="modal">Annuler</button>
+                    <button type="submit" name="" class="btn btn-danger" data-dismiss="modal" onclick="formSubmit()">Oui, supprimer</button>
              </div>
          </div>
      </form>
