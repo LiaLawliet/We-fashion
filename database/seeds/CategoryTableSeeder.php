@@ -11,7 +11,7 @@ class CategoryTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('categories')->insert([
+        DB::table('categories')->insert([// creation de deux catégories au moment de la migration
             [
                 'name' => 'Homme',
             ],

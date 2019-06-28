@@ -21,9 +21,9 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::paginate($this->paginate);
+        $products = Product::paginate($this->paginate); // On récupère les produits
 
-        return view('back.product.index', ['products' => $products]);
+        return view('back.product.index', ['products' => $products]);  // On les envois à la page admin des produits
     }
 
     /**
@@ -35,6 +35,8 @@ class ProductController extends Controller
     {
         $sizes = Size::pluck('name','id')->all();
         $catgories = Category::pluck('name','id')->all();
+
+        //Redirection vers la page de création d'un produit
         return view('back.product.create',['sizes'=>$sizes,'catgories'=>$catgories]);
     }
 
@@ -44,8 +46,9 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request) // Fonction d'ajout d'un produit
     {
+        // Validation des données du formulaire
         $this->validate($request, [
             'name' => 'required|min:5|max:100',
             'description' => 'required',
@@ -60,19 +63,18 @@ class ProductController extends Controller
 
         $datas = $request->all();
 
-        // hash image name
         
-        $imageName = $request->picture->hashName();
+        $imageName = $request->picture->hashName(); //hashage du nom de l'image à enregistrer
         $datas['picture'] = $imageName;
 
-        // store the image
         $categoryId = $datas['category_id'];
         $img = $request->file('picture');
-        $img->move(public_path('/img/'.$categoryId),$datas['picture']);
+        $img->move(public_path('/img/'.$categoryId),$datas['picture']);// insertion de l'image dans le dossier de catégorie choisie
 
-        // insert the datas inside the database
-        $product = Product::create($datas);
+        $product = Product::create($datas); // Insertion d'un nouveau produit dans la BDD
         $product->size()->attach($request->sizes);
+
+        //Redirection vers la page admin des produits
         return redirect()->route('product.index')->with('message', 'Le produit a bien été ajouté');
     }
 
@@ -84,9 +86,6 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        $product = Product::find($id);
-
-        return view('back.product.show', ['product' => $product]);
     }
 
     /**
@@ -95,7 +94,7 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id) // Fonction de modification d'un produit
     {
         $product = Product::find($id);
         $categories = Category::pluck('name', 'id')->all();
@@ -113,6 +112,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // Validation des données du formulaire
         $this->validate($request, [
             'name' => 'required|min:5|max:100',
             'description' => 'required',
@@ -130,19 +130,19 @@ class ProductController extends Controller
         $datas = $request->all();
 
         $file = $request->file('picture');
-        if(!empty($file)){
-            $imageName = $request->picture->hashName();
+        if(!empty($file)){ // si l'utilisateur ne change pas son image
+            $imageName = $request->picture->hashName(); //hashage du nom de l'image à enregistrer
             $datas['picture'] = $imageName;
 
             $categoryId = $datas['category_id'];
             $img = $request->file('picture');
-            $img->move(public_path('/img/'.$categoryId),$datas['picture']);
+            $img->move(public_path('/img/'.$categoryId),$datas['picture']);// insertion de l'image dans le dossier de catégorie choisie
         }else{
-            if($product->category_id != $datas['category_id']){
+            if($product->category_id != $datas['category_id']){ // si l'utilisateur change de catégorie
                 $newCategoryId = $datas['category_id'];
                 $oldPath = public_path('/img/'.$product->category_id.'/'.$product->picture);
                 $newPath = public_path('/img/'.$newCategoryId.'/'.$product->picture);
-                File::move($oldPath,$newPath);
+                File::move($oldPath,$newPath);// insertion de l'image dans le dossier de catégorie choisie
             }
             
         }
@@ -151,6 +151,7 @@ class ProductController extends Controller
         $product->update($datas);
         $product->size()->sync($request->sizes);
 
+        //Redirection vers la page admin des produits
         return redirect()->route('product.index')->with('message', 'Le produit a bien été mise à jour');
     }
 
@@ -160,10 +161,12 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id) // Fonction de suppression d'un produit
     {
-        $product = Product::find($id);
-        $product->delete();
+        $product = Product::find($id);// on récupère le produit à supprimer
+        $product->delete(); // On le supprime
+
+        //Redirection vers la page admin des produits
         return redirect()->route('product.index');
     }
 }

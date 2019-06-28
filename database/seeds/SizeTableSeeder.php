@@ -11,6 +11,7 @@ class SizeTableSeeder extends Seeder
      */
     public function run()
     {
+        // Création des sizes
         DB::table('sizes')->insert([
             [
                 'name' => 'XS',

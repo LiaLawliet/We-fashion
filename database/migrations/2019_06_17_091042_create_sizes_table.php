@@ -11,7 +11,7 @@ class CreateSizesTable extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up() //creation de la table Sizes
     {
         Schema::create('sizes', function (Blueprint $table) {
             $table->increments('id');
@@ -24,7 +24,7 @@ class CreateSizesTable extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down() //suppression de la table Sizes
     {
         Schema::dropIfExists('sizes');
     }

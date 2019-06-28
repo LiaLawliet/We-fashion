@@ -11,7 +11,7 @@ class CreateProductsTable extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up() //creation de la table Products
     {
         Schema::create('products', function (Blueprint $table) {
             $table->increments('id');
@@ -24,7 +24,8 @@ class CreateProductsTable extends Migration
             $table->enum('sales', ['onSales', 'standard']);
             $table->enum('status', ['published', 'unpublished']);
             
-            $table->foreign('category_id')->references('id')->on('categories')->onDelete('SET NULL');
+            //Si une categorie est supprimée les produits lui appartenant sont supprimés aussi
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -34,7 +35,7 @@ class CreateProductsTable extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down() //suppression de la table Products
     {
         Schema::dropIfExists('products');
     }

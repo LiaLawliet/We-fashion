@@ -11,7 +11,7 @@ class CreateUsersTable extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up() //creation de la table Users
     {
         Schema::create('users', function (Blueprint $table) {
             $table->bigIncrements('id');
@@ -29,7 +29,7 @@ class CreateUsersTable extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down()//suppression de la table Users
     {
         Schema::dropIfExists('users');
     }

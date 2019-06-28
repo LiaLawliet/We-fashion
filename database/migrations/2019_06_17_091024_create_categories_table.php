@@ -11,11 +11,12 @@ class CreateCategoriesTable extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up()//creation de la table Categories
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name',100);
+            $table->timestamps();
         });
     }
 
@@ -24,7 +25,7 @@ class CreateCategoriesTable extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down()//suppression de la table Categories
     {
         Schema::dropIfExists('categories');
     }

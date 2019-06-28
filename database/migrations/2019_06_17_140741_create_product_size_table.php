@@ -11,7 +11,7 @@ class CreateProductSizeTable extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up()  //creation de la table d'association entre Sizes et Products
     {
         Schema::create('product_size', function (Blueprint $table) {
             $table->unsignedInteger('product_id');
@@ -27,7 +27,7 @@ class CreateProductSizeTable extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down() //suppression de la table d'association entre Sizes et Products
     {
         Schema::dropIfExists('product_size');
     }

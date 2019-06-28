@@ -18,9 +18,9 @@ class CategoryController extends Controller
 
     public function index()
     {
-        $categories = Category::paginate($this->paginate);
+        $categories = Category::paginate($this->paginate); // On récupère les catégories
 
-        return view('back.categories.index', ['categories' => $categories]);
+        return view('back.categories.index', ['categories' => $categories]); // On les envois à la view admin de catégorie
     }
 
     /**
@@ -39,20 +39,22 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request) // Fonction d'ajout de catégorie
     {
-        $this->validate($request, [
+        // Validation des données du formulaire
+        $this->validate($request, [ 
             'name' => 'required|min:5|max:100'
         ]);
 
         
         
         $datas = $request->all();
-        $category = Category::create($datas);
+        $category = Category::create($datas); // Insertion d'une nouvelle catégorie dans la BDD
         $path = public_path().'/img/'.$category->id;
-        File::makeDirectory($path);
-
-        return redirect()->route('categories.index')->with('message', 'La catégorie a bien été mise à jour');
+        File::makeDirectory($path); // Création d'un dossier d'image dédié à la catégorie
+        
+        // On retourne à la page de gestion des catégories
+        return redirect()->route('categories.index')->with('message', 'La catégorie a bien été mise à jour'); 
     }
 
     /**
@@ -83,18 +85,21 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id) // Fonction de modification de catégorie
     {
+        // Validation des données du formulaire
         $this->validate($request, [
             'name' => 'required|min:5|max:100'
         ]);
 
-        $category = Category::find($id);
+        $category = Category::find($id); // On retrouve la catégorie à modifier
         
         $datas = $request->all();
 
-        $category->update($datas);
+        $category->update($datas);  // Modification d'une catégorie dans la BDD
 
+        
+        // On retourne à la page de gestion des catégories
         return redirect()->route('categories.index')->with('message', 'La catégorie a bien été mise à jour');
     }
 
@@ -106,8 +111,8 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        $category = Category::find($id);
-        $category->delete();
-        return redirect()->route('categories.index');
+        $category = Category::find($id); // On retrouve la catégorie à supprimer
+        $category->delete(); // Suppression d'une catégorie dans la BDD
+        return redirect()->route('categories.index');// On retourne à la page de gestion des catégories
     }
 }

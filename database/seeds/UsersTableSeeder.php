@@ -12,6 +12,7 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
+        // Création d'un utilisateur admin
         DB::table('users')->insert([
             'name' => 'admin',
             'email' => 'admin@admin.fr',

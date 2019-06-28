@@ -29,14 +29,17 @@ class Product extends Model
      * @param $query
      * @return mixed
      */
+    // Un produit appartient à une seule catégorie
     public function category(){
         return $this->belongsTo(Category::class);
     }
     
+    // Un produit peut avoir plusieurs tailles
     public function size(){
         return $this->belongsToMany(Size::class);
     }
 
+    //filtre pour avoir les produits publiés
     public function scopePublished($query){
         return $query->where('status', 'published');
     }
@@ -45,6 +48,8 @@ class Product extends Model
      * @param $query
      * @return mixed
      */
+
+     //filtre pour avoir les produits en promotion
     public function scopeSales($query){
         return $query->where('sales', 'onSales');
     }
