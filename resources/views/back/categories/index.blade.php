@@ -5,7 +5,7 @@
 <table class="table table-striped">
     <thead>
         <tr>
-            <th>Nom</th>
+            <th style='width:70%;'>Nom</th>
             <th>Modifier</th>
             <th>Supprimer</th>
         </tr>
@@ -34,7 +34,6 @@
             <div class="modal-content">
                 <div class="modal-header bg-danger">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title text-center">CONFIRMATION DE LA SUPPRESSION</h4>
                 </div>
                 <div class="modal-body">
                     {{ csrf_field() }}

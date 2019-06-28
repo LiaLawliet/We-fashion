@@ -117,7 +117,7 @@ class ProductController extends Controller
             'name' => 'required|min:5|max:100',
             'description' => 'required',
             'price' => 'required|numeric',
-            'picture' => 'required|image:max:3000',
+            'picture' => 'image:max:3000',
             'status' => 'required|in:published,unpublished',
             'sales' => 'required|in:onSales,standard',
             'reference' => 'required|alpha_num|min:16|max:16',
@@ -131,13 +131,20 @@ class ProductController extends Controller
 
         $file = $request->file('picture');
         if(!empty($file)){
-            File::delete(public_path('/img/'.$product->category_id.'/'.$product->picture));// delete img from folder
             $imageName = $request->picture->hashName();
             $datas['picture'] = $imageName;
 
             $categoryId = $datas['category_id'];
             $img = $request->file('picture');
             $img->move(public_path('/img/'.$categoryId),$datas['picture']);
+        }else{
+            if($product->category_id != $datas['category_id']){
+                $newCategoryId = $datas['category_id'];
+                $oldPath = public_path('/img/'.$product->category_id.'/'.$product->picture);
+                $newPath = public_path('/img/'.$newCategoryId.'/'.$product->picture);
+                File::move($oldPath,$newPath);
+            }
+            
         }
 
         

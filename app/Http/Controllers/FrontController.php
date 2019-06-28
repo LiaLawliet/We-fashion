@@ -19,7 +19,8 @@ class FrontController extends Controller
     }
 
     public function index(){
-        $products = Product::all()->where('status','=','published');
+        $products = Product::published()->paginate($this->paginate);
+
         $nbproducts = count(Product::all()->where('status','=','published'));
 
         return view('front.index', ['products' => $products, 'nbproducts' => $nbproducts]);
@@ -32,9 +33,21 @@ class FrontController extends Controller
     }
     
     public function showByCategory(int $id){
-        $category= Category::find($id);
-        $products = $category->products()->where('status','=','published')->paginate($this->paginate); // on récupère tous les livres d'un auteur
+        $products = Product::published()->categories($id)->paginate($this->paginate);
         $nbproducts = count(Product::all()->where('category_id', '=', $id)->where('status','=','published'));
-        return view('front.index', ['products' => $products, 'category' => $category,'nbproducts' => $nbproducts]);
+        $category = Category::find($id);
+        
+        return view('front.categories', [
+            'products' => $products,
+            'nbproducts' => $nbproducts,
+            'category' => $category
+        ]);
+    }
+
+    public function showBySales(){
+        $products = Product::published()->sales()->paginate($this->paginate);
+        $nbproducts = count(Product::all()->where('sales','=','onSales')->where('status','=','published'));
+
+        return view('front.sales', ['products' => $products, 'nbproducts' => $nbproducts]);
     }
 }
